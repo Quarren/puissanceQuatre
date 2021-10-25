@@ -7,5 +7,13 @@ public class Joueur {
 	public Joueur() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Joueur(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
 
 }

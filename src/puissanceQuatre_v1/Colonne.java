@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 public class Colonne {
 	
-	private int position;
+	private int position; // le numéro de la colonne
 	
 	// pions du joueur d'id 1 -> 1
 	// pions du joueur d'id 2 -> 2
 	// 0 marque l'absence de pions
 	private int[] pions = new int[6];
-	private int nbp = 0;
-	//private ArrayList<Integer> pions = new ArrayList<Integer>(7);
+	private int nbp = 0; // nombre de pions dans la colonne, sans compter les 0
 
 	public Colonne() {
 		// TODO Auto-generated constructor stub
@@ -37,7 +36,7 @@ public class Colonne {
 			return true;
 		} else {
 			System.out.println("La colonne contient déjà 6 pions.");
-			throw new ActionJoueurImpossible("Cette colonne est déjà pleine !");
+			throw new ActionJoueurImpossible("La colonne n°" + this.position + " est déjà pleine !");
 		}
 	}
 	
