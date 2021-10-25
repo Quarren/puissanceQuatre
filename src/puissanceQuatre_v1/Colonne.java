@@ -37,8 +37,7 @@ public class Colonne {
 			return true;
 		} else {
 			System.out.println("La colonne contient déjà 6 pions.");
-			// TODO : throw exception ?
-			return false;
+			throw new ActionJoueurImpossible("Cette colonne est déjà pleine !");
 		}
 	}
 	

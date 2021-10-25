@@ -24,8 +24,6 @@ public class Jeu {
 		}
 		return res;
 	}
-	
-	// TO STRING
 
 	public static void main(String[] args) {
 		Jeu j = new Jeu();
