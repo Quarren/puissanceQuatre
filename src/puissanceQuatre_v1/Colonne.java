@@ -57,21 +57,27 @@ public class Colonne {
 	}
 	
 	
-	public boolean gagnerHorizontal(Joueur j, int nbpAlignes, int idx) {
-		if (idx == pions.length || nbpAlignes == 4) {
-			if (nbpAlignes == 4) {
-				return true;
-			} else {
-				//System.out.println("idx = " + idx);
-				return false;
-			}
+	public boolean gagnerVertical(Joueur j, int nbpAlignes, int idx) {
+		if (nbpAlignes == 4) {
+			return true;
+		} else if (idx == pions.length) {
+			return false;
+		} else if (pions[idx] == j.getId()) {
+			return this.gagnerVertical(j, nbpAlignes+1, idx+1);
 		} else {
-			if (pions[idx] == j.getId()) {
-				//System.out.println(nbpAlignes);
-				return this.gagnerHorizontal(j, nbpAlignes+1, idx+1);
-			} else {
-				return this.gagnerHorizontal(j, nbpAlignes, idx+1);
-			}
+			return this.gagnerVertical(j, nbpAlignes, idx+1);
+		}
+	}
+	
+	public boolean gagnerHorizontal(Joueur j, int nbpAlignes, int idx) {
+		if (nbpAlignes == 4) {
+			return true;
+		} else if (idx == 6) {
+			return false;
+		} else if (pions[idx] == j.getId()) {
+			return this.gagnerHorizontal(j, nbpAlignes+1, idx+1);
+		} else {
+			return this.gagnerHorizontal(j, nbpAlignes, idx+1);
 		}
 	}
 	
