@@ -14,7 +14,7 @@ public class Jeu {
 		}
 		Joueur p;
 		for (int j = 0; j < 2; j++) {
-			p = new Joueur(j);
+			p = new Joueur(j+1);
 			joueurs[j] = p;
 		}
 	}
@@ -31,44 +31,77 @@ public class Jeu {
 		return res;
 	}
 	
-	public boolean gagnerVerticalement(int idJoueur) {
+	// indice colonne = idColonne -1
+	public boolean gagnerVerticalement(int idColonne, int idJoueur, int idx) {
+		boolean bool = true;
+		System.out.println("idx=" + idx);
+			int i = 0;
+			while (i < 4 && bool) {
+				i++;
+				System.out.println(idx-i);
+				if (colonnes[idColonne].getPions()[idx-i] != idJoueur) {
+					bool = false;
+				}
+				System.out.println(bool);
+		}
+		//System.out.println(bool);
 		// TODO
-		return false;
+		return bool;
 	}
 	
-	public boolean gagnerHorizontalement(int idJoueur) {
+	public boolean gagnerHorizontalement(int idColonne, int idJoueur, int idx) {
 		// TODO
 		return false;
 	}
 	
 	// Nord Ouest
-	public boolean gagnerEnDiagonaleNO(int idJoueur) {
+	public boolean gagnerEnDiagonaleNO(int idColonne, int idJoueur, int idx) {
 		// TODO
 		return false;
 	}
 	
 	// Nord Est
-	public boolean gagnerEnDiagonaleNE(int idJoueur) {
+	public boolean gagnerEnDiagonaleNE(int idColonne, int idJoueur, int idx) {
 		// TODO
 		return false;
 	}
 	
 	public boolean ajouterPion(int idColonne, int idJoueur) {
-		// TODO
-		if (this.gagnerVerticalement(idJoueur) || this.gagnerHorizontalement(idJoueur) || this.gagnerEnDiagonaleNO(idJoueur) || 
-				this.gagnerEnDiagonaleNE(idJoueur)) {
+		int idx = this.colonnes[idColonne-1].ajouterPion(idJoueur);
+		//TODO
+		/*if (this.gagnerVerticalement(idColonne, idJoueur, idx) || this.gagnerHorizontalement(idColonne, idJoueur, idx) || 
+				this.gagnerEnDiagonaleNO(idColonne, idJoueur, idx) || this.gagnerEnDiagonaleNE(idColonne, idJoueur, idx)) {
 			return true;
 		} else {
 			return false;
-		}
+		}*/
+		return false; // TODO à supprimer
 	}
 
 	public static void main(String[] args) {
 		Jeu j = new Jeu();
 		//System.out.println(j.toString());
-		j.colonnes[5].ajouterPion(2);
+		//j.colonnes[5].ajouterPion(2);
+		
+		j.ajouterPion(1, 1);
+		System.out.println("nbp colonnes 1: " + j.colonnes[0].getNbp());
+		//System.out.println("nbp colonnes 1: " + j.colonnes[0].getPions(j.colonnes[0].getNbp())-1);
+		j.ajouterPion(1,2);
+		System.out.println("nbp colonnes 1: " + j.colonnes[0].getNbp());
+		//j.ajouterPion(1, 1);
+		//j.ajouterPion(1, 1);
+		//System.out.println(j.ajouterPion(1, 1));
 		
 		System.out.println(j.toString());
+		
+		j.ajouterPion(1, 1);
+		j.ajouterPion(1, 1);
+		j.ajouterPion(1, 1);
+		j.ajouterPion(1, 1);
+		System.out.println(j.colonnes[0].gagnerHorizontal(joueurs[0], 0, 0));
+		
+		System.out.println(j.toString());
+		
 		/*j.colonnes[0].ajouterPion(1);
 		j.colonnes[1].ajouterPion(2);
 		j.colonnes[0].ajouterPion(1);

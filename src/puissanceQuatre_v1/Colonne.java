@@ -28,12 +28,16 @@ public class Colonne {
 		return this.pions;
 	}
 	
+	public int getNbp() {
+		return this.nbp;
+	}
+	
 	// retourne l'index de la dernière
-	public boolean ajouterPion(int i) {
+	public int ajouterPion(int i) {
 		if (nbp < 6) {
 			pions[nbp] = i;
 			nbp += 1;
-			return true;
+			return nbp;
 		} else {
 			System.out.println("La colonne contient déjà 6 pions.");
 			throw new ActionJoueurImpossible("La colonne n°" + this.position + " est déjà pleine !");
@@ -50,6 +54,25 @@ public class Colonne {
 			}
 		}
 		return res;
+	}
+	
+	
+	public boolean gagnerHorizontal(Joueur j, int nbpAlignes, int idx) {
+		if (idx == pions.length || nbpAlignes == 4) {
+			if (nbpAlignes == 4) {
+				return true;
+			} else {
+				//System.out.println("idx = " + idx);
+				return false;
+			}
+		} else {
+			if (pions[idx] == j.getId()) {
+				//System.out.println(nbpAlignes);
+				return this.gagnerHorizontal(j, nbpAlignes+1, idx+1);
+			} else {
+				return this.gagnerHorizontal(j, nbpAlignes, idx+1);
+			}
+		}
 	}
 	
 	public static void main(String[] args) {
