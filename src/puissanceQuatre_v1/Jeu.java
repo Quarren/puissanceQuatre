@@ -30,28 +30,25 @@ public class Jeu {
 		}
 		return res;
 	}
-	
-	// indice colonne = idColonne -1
-	public boolean gagnerVerticalement(int idColonne, int idJoueur, int idx) {
-		boolean bool = true;
-		System.out.println("idx=" + idx);
-			int i = 0;
-			while (i < 4 && bool) {
-				i++;
-				System.out.println(idx-i);
-				if (colonnes[idColonne].getPions()[idx-i] != idJoueur) {
-					bool = false;
-				}
-				System.out.println(bool);
+		
+	/*
+	 * avec ndp le nombre de pions dans la colonne où j à joué (entre 0 et 5)
+	 * j le joueur qui vient de jouer
+	 * idx l'indice de la colonne pour faire un parcours horizontal de 0 à 6
+	 * nbpÂlignes le compteur de pions alignés
+	 */
+	public boolean gagnerHorizontal(int ndp, Joueur j, int idx, int nbpAlignes) {
+		// On appelle cette méthode avec ndp = idColonne.getNbp() après ajouterPion
+		// idx = 0 et nbpAlignes = 0
+		if (nbpAlignes == 4) {
+			return true;
+		} else if (idx == 6) {
+			return false;
+		} else if (colonnes[idx].getPions()[ndp] == j.getId()) {
+			return gagnerHorizontal(ndp, j, idx+1, nbpAlignes+1);
+		} else {
+			return gagnerHorizontal(ndp, j, idx+1, nbpAlignes);
 		}
-		//System.out.println(bool);
-		// TODO
-		return bool;
-	}
-	
-	public boolean gagnerHorizontalement(int idColonne, int idJoueur, int idx) {
-		// TODO
-		return false;
 	}
 	
 	// Nord Ouest
@@ -98,7 +95,7 @@ public class Jeu {
 		j.ajouterPion(1, 1);
 		j.ajouterPion(1, 1);
 		j.ajouterPion(1, 1);
-		System.out.println(j.colonnes[0].gagnerHorizontal(joueurs[0], 0, 0));
+		//System.out.println(j.colonnes[0].gagnerHorizontalement(joueurs[0], 0, 0));
 		
 		System.out.println(j.toString());
 		

@@ -69,17 +69,6 @@ public class Colonne {
 		}
 	}
 	
-	public boolean gagnerHorizontal(Joueur j, int nbpAlignes, int idx) {
-		if (nbpAlignes == 4) {
-			return true;
-		} else if (idx == 6) {
-			return false;
-		} else if (pions[idx] == j.getId()) {
-			return this.gagnerHorizontal(j, nbpAlignes+1, idx+1);
-		} else {
-			return this.gagnerHorizontal(j, nbpAlignes, idx+1);
-		}
-	}
 	
 	public static void main(String[] args) {
 		Colonne c1 = new Colonne(1);
