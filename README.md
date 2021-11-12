@@ -2,9 +2,11 @@
 
 TODO
 #Kevin
-Depth-first (profondeur)
-Breadth-first (largeur)
-
+<ul>
+  <li>Depth-first (profondeur)</li>
+  <li>Breadth-first (largeur)</li>
+</ul>
+  
 #Thibs
 Hill-climbing
 Simulated annealing
