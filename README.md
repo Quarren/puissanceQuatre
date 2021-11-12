@@ -1,17 +1,21 @@
 # puissanceQuatre
 
 TODO
-#Kevin
+<br>#Kevin
 <ul>
   <li>Depth-first (profondeur)</li>
   <li>Breadth-first (largeur)</li>
 </ul>
   
-#Thibs
-Hill-climbing
-Simulated annealing
-Best-first search (ex: A*)
-
-#Yassine
-Minimax
-Taille alpha-beta
+<br>#Thibs
+<ul>
+  <li>Hill-climbing</li>
+  <li>Simulated annealing</li>
+  <li>Best-first search (ex: A*)</li>
+</ul>
+  
+<br>#Yassine
+<ul>
+  <li>Minimax</li>
+  <li>Taille alpha-beta</li>
+</ul>
