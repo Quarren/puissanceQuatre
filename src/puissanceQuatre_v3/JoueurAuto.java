@@ -9,23 +9,27 @@ public abstract class JoueurAuto extends Joueur {
 		super(couleur, planche);
 	}
 	
-	// calcule le score sur chacune des colonnes et renvoie l'indice de la colonne dont le score est le plus élevé
+	// calcule le score sur la colonne col
 	public int scoreVertical(int col) {
-		System.out.println("Appel méthode scoreVertical()");
+		//System.out.println("Appel méthode scoreVertical()");
 		Planche p2 = new Planche(this.planche);
-		System.out.println("planche p2 copie de plance avant ajout");
-		p2.printPlanche();
+		//System.out.println("planche p2 copie de plance avant ajout");
+		//p2.printPlanche();
+		if (p2.dernierPieceLigne(col) == 0) {
+			System.out.println("colonne " + col + " pleine.");
+			return -1;
+		}
 		p2.ajouterPiece(col, this.getCouleur());
-		System.out.println("planche p2 après ajout");
-		p2.printPlanche();
+		//System.out.println("planche p2 après ajout");
+		//p2.printPlanche();
 		int idx = p2.dernierPieceLigne(col);
 		int nbpAlignes = 0;
-		System.out.println("nbpAlignes : " + nbpAlignes);
+		//System.out.println("nbpAlignes : " + nbpAlignes);
 		for (int i = idx; i <= idx+3 && i <= 5; i++) {
-			System.out.println("i = " + i);
+			//System.out.println("i = " + i);
 			if (p2.puissance4Planche[i][col].getCouleur() == this.getCouleur()) {
 				nbpAlignes++;
-				System.out.println("nbpAlignes : " + nbpAlignes);
+				//System.out.println("nbpAlignes : " + nbpAlignes);
 			} else {
 				break;
 			}
@@ -33,8 +37,44 @@ public abstract class JoueurAuto extends Joueur {
 		return nbpAlignes == 0 ? 0 : heuristics[nbpAlignes-1];
 	}
 	
-	/*
-	public int scoreHorizontal() {
-		Planche p2 = new Planche();
-	}*/
+	//TODO à tester
+	public int scoreHorizontal(int col) {
+		System.out.println("appel méthode scoreHorizontal");
+		Planche p2 = new Planche(this.planche);
+		if (p2.dernierPieceLigne(col) == 0) {
+			System.out.println("colonne " + col + " pleine.");
+			return -1;
+		}
+		p2.ajouterPiece(col, this.getCouleur());
+		int idx = p2.dernierPieceLigne(col);
+		p2.printPlanche();
+		int colDepart = col >= 3 ? col - 3 : 0;
+		//System.out.println("coldepart: " + colDepart);
+		int colFin = col >= 3 ? 6 : col + 3;
+		//System.out.println("colfin : " + colFin);
+		int score = 0;
+		while (colDepart + 3 <= colFin) {
+			int nbpAlignes = 0;
+			for (int i = 0; i < 4; i++) {
+				//System.out.println("itération n°" + i);
+				if (p2.puissance4Planche[idx][colDepart+i] != null) {
+					if (p2.puissance4Planche[idx][colDepart+i].getCouleur() == this.getCouleur()) {
+						nbpAlignes++;
+						//System.out.println(nbpAlignes);
+					} else {
+						break;
+					}
+				}
+			}
+			if (nbpAlignes != 0) {
+				System.out.println("nbpAlignes : " + nbpAlignes);
+				score += this.heuristics[nbpAlignes-1];
+			}
+			colDepart++;
+		}
+		return score;
+	}
+	
+	//TODO scoreDiagSOToNE
+	//TODO scoreDiagNOToSE
 }

@@ -11,13 +11,19 @@ public class Main {
 		Jeu jeu = new Jeu(j1, j2, p);
 		//jeu.commencerJeu();
 		p.ajouterPiece(1, "X");
-		p.ajouterPiece(1, "X");
-		p.ajouterPiece(1, "X");
+		p.ajouterPiece(2, "X");
 		p.printPlanche();
-		//System.out.println("dernière pièce de col 1 : " + p.dernierPieceLigne(1));
+
 		//j2.scoreVertical(1);
-		System.out.println(j2.scoreVertical(1));
-		p.printPlanche();
+		//System.out.println("score vertical : " + j2.scoreVertical(1));
+		System.out.println("score horizontal : " + j2.scoreHorizontal(4));
+		//p.printPlanche();
+		/*
+		if (p.puissance4Planche[0][0] != null) {
+			System.out.println(p.puissance4Planche[0][0].getCouleur());
+		} else {
+			System.out.print("out of bound machin yo");
+		}*/
 	}
 
 }
