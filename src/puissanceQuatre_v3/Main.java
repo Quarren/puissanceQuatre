@@ -10,13 +10,16 @@ public class Main {
 		Joueur j1 = new JoueurHumain("O", p);
 		Jeu jeu = new Jeu(j1, j2, p);
 		//jeu.commencerJeu();
-		p.ajouterPiece(1, "X");
-		p.ajouterPiece(2, "X");
+		p.ajouterPiece(0, "X");
+		p.ajouterPiece(1, "X");p.ajouterPiece(1, "X");
+		p.ajouterPiece(2, "X");p.ajouterPiece(2, "X");
+		p.ajouterPiece(3, "X");p.ajouterPiece(3, "X");p.ajouterPiece(3, "X");p.ajouterPiece(3, "X");
+		p.ajouterPiece(4, "X");p.ajouterPiece(4, "X");p.ajouterPiece(4, "X");p.ajouterPiece(4, "X");p.ajouterPiece(4, "X");
+		p.ajouterPiece(5, "X");p.ajouterPiece(5, "X");p.ajouterPiece(5, "X");p.ajouterPiece(5, "X");p.ajouterPiece(5, "X");
 		p.printPlanche();
+		
+		System.out.println("score diagonale : " + j2.scoreDiagSOToNE(5));
 
-		//j2.scoreVertical(1);
-		//System.out.println("score vertical : " + j2.scoreVertical(1));
-		System.out.println("score horizontal : " + j2.scoreHorizontal(4));
 		//p.printPlanche();
 	}
 

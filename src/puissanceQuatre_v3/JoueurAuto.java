@@ -79,22 +79,30 @@ public abstract class JoueurAuto extends Joueur {
 	public int scoreDiagSOToNE(int col) {
 		System.out.println("appel méthode scoreDiagSOToNE");
 		Planche p2 = new Planche(this.planche);
+		// colonne pleine
 		if (p2.dernierPieceLigne(col) == 0) {
 			System.out.println("colonne " + col + "pleine.");
 			return -1;
 		}
 		p2.ajouterPiece(col, this.getCouleur());
 		int idx = p2.dernierPieceLigne(col);
+		System.out.println("idx = " + idx);
 		p2.printPlanche();
+		// TODO : vérifier si col >= 3
+		// si oui colDepart = col - 3
+		
+		int colDepart;
+		int lineDepart;
 		if (col <= 5-idx) {
-			int colDepart = 0;
-			int lineDepart = idx - col;
+			colDepart = 0;
+			lineDepart = idx + col;
 		} else {
-			int colDepart = idx - (5- idx);
-			int lineDepart = 5;
+			colDepart = idx - (5- idx);
+			lineDepart = 5;
 		}
-		//int colFin;
-		//int lineFin;
+		System.out.println("colDepart = " + colDepart);
+		System.out.println("lineDepart = " + lineDepart);
+
 		int score = 0;
 		
 		// éliminer les configurations où on a pas 4 cases alignées en diagonale
@@ -124,7 +132,27 @@ public abstract class JoueurAuto extends Joueur {
 			return 0;
 		}
 		
-		while (colDepart >=)
+		int streak;
+		int j = 0;
+		int k = lineDepart;
+		while (colDepart + 3 <= 7 && lineDepart - 3 >= 0 && colDepart <= col && lineDepart >= idx) {
+			streak = 0;
+			for (int i = 0; i < 4; i++) {
+				if (p2.puissance4Planche[lineDepart-i][colDepart+i] != null) {
+					if (p2.puissance4Planche[lineDepart-i][colDepart+i].getCouleur() == this.getCouleur()) {
+						streak++;
+						//System.out.println(streak);
+					} else {
+						break;
+					}
+				}
+			}
+			if (streak != 0) {
+				score += this.heuristics[streak-1];
+			}
+			colDepart++; lineDepart--;
+		}
+		return score;
 	}
 	
 	
