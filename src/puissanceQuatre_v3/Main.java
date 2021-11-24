@@ -18,12 +18,6 @@ public class Main {
 		//System.out.println("score vertical : " + j2.scoreVertical(1));
 		System.out.println("score horizontal : " + j2.scoreHorizontal(4));
 		//p.printPlanche();
-		/*
-		if (p.puissance4Planche[0][0] != null) {
-			System.out.println(p.puissance4Planche[0][0].getCouleur());
-		} else {
-			System.out.print("out of bound machin yo");
-		}*/
 	}
 
 }

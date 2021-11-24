@@ -37,7 +37,7 @@ public abstract class JoueurAuto extends Joueur {
 		return nbpAlignes == 0 ? 0 : heuristics[nbpAlignes-1];
 	}
 	
-	//TODO à tester
+	// calcule le score horizontal quand on rajoute une pièce dans la colonne col
 	public int scoreHorizontal(int col) {
 		System.out.println("appel méthode scoreHorizontal");
 		Planche p2 = new Planche(this.planche);
@@ -76,5 +76,57 @@ public abstract class JoueurAuto extends Joueur {
 	}
 	
 	//TODO scoreDiagSOToNE
+	public int scoreDiagSOToNE(int col) {
+		System.out.println("appel méthode scoreDiagSOToNE");
+		Planche p2 = new Planche(this.planche);
+		if (p2.dernierPieceLigne(col) == 0) {
+			System.out.println("colonne " + col + "pleine.");
+			return -1;
+		}
+		p2.ajouterPiece(col, this.getCouleur());
+		int idx = p2.dernierPieceLigne(col);
+		p2.printPlanche();
+		if (col <= 5-idx) {
+			int colDepart = 0;
+			int lineDepart = idx - col;
+		} else {
+			int colDepart = idx - (5- idx);
+			int lineDepart = 5;
+		}
+		//int colFin;
+		//int lineFin;
+		int score = 0;
+		
+		// éliminer les configurations où on a pas 4 cases alignées en diagonale
+		if (idx == 0 && col == 0
+				|| idx == 0 && col == 1
+				|| idx == 0 && col == 2) {
+			return 0;
+		}
+		if (idx == 1 && col == 0
+				|| idx == 1 && col == 1) {
+			return 0;
+		}
+		if (idx == 2 && col == 0) {
+			return 0;
+		}
+		
+		if (idx == 5 && col == 4
+				|| idx == 5 && col == 5
+				|| idx == 5 && col == 6) {
+			return 0;
+		}
+		if (idx == 4 && col == 5
+				|| idx == 4 && col == 6) {
+			return 0;
+		}
+		if (idx == 3 && col == 6) {
+			return 0;
+		}
+		
+		while (colDepart >=)
+	}
+	
+	
 	//TODO scoreDiagNOToSE
 }

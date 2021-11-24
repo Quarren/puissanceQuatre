@@ -61,7 +61,7 @@ public class Planche {
 			}
 			
 		} else {
-			System.out.println("Vous avez coisis une colonne erronée");
+			System.out.println("Vous avez choisi une colonne qui n'existe pas");
 			return -1;
 		}
 	}

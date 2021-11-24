@@ -140,8 +140,8 @@ public class Jeu {
 				System.out.println("Le tour de joueur 2");
 			}
 			
-			System.out.println("Choisissez la colonne où vous voulez ajouter votre piièce.");
-			System.out.print("Choisir entre 1 and " + planche.getColonnes() + ": ");
+			System.out.println("Choisissez la colonne où vous voulez ajouter votre pièce.");
+			System.out.print("Choisir entre 1 et " + planche.getColonnes() + ": ");
 			
 			Scanner input = new Scanner(System.in);
 			int colonne = input.nextInt() - 1;
@@ -149,7 +149,7 @@ public class Jeu {
 			int succes = planche.ajouterPiece(colonne, couleur);		
 			while(succes == -1) {
 				System.out.println("La colonne est pleine");
-				System.out.print("Choisir entre 1 and " + planche.getColonnes() + ": ");
+				System.out.print("Choisir entre 1 et " + planche.getColonnes() + ": ");
 				colonne = input.nextInt() - 1;
 				
 				succes = planche.ajouterPiece(colonne, couleur);
