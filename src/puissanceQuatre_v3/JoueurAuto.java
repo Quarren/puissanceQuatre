@@ -88,22 +88,6 @@ public abstract class JoueurAuto extends Joueur {
 		int idx = p2.dernierPieceLigne(col);
 		System.out.println("idx = " + idx);
 		p2.printPlanche();
-		// TODO : vérifier si col >= 3
-		// si oui colDepart = col - 3
-		
-		int colDepart;
-		int lineDepart;
-		if (col <= 5-idx) {
-			colDepart = 0;
-			lineDepart = idx + col;
-		} else {
-			colDepart = idx - (5- idx);
-			lineDepart = 5;
-		}
-		System.out.println("colDepart = " + colDepart);
-		System.out.println("lineDepart = " + lineDepart);
-
-		int score = 0;
 		
 		// éliminer les configurations où on a pas 4 cases alignées en diagonale
 		if (idx == 0 && col == 0
@@ -131,6 +115,27 @@ public abstract class JoueurAuto extends Joueur {
 		if (idx == 3 && col == 6) {
 			return 0;
 		}
+		
+		// TODO : vérifier si col >= 3
+		// si oui colDepart = col - 3
+		int colDepart;
+		int lineDepart;
+		if (col <= 3 || idx >= 2) {
+			if (col <= 5-idx) {
+				colDepart = 0;
+				lineDepart = idx + col;
+			} else {
+				colDepart = idx - (5- idx);
+				lineDepart = 5;
+			}
+		} else {
+			colDepart = col - 3; lineDepart = idx + 3;
+		}
+
+		System.out.println("colDepart = " + colDepart);
+		System.out.println("lineDepart = " + lineDepart);
+
+		int score = 0;
 		
 		int streak;
 		int j = 0;
