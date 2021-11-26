@@ -25,7 +25,7 @@ public class Main {
 		p.ajouterPiece(2, "X");p.ajouterPiece(2, "X");p.ajouterPiece(2, "X");p.ajouterPiece(2, "X");
 		p.ajouterPiece(1, "X");p.ajouterPiece(1, "X");p.ajouterPiece(1, "X");p.ajouterPiece(1, "X");p.ajouterPiece(1, "X");
 		
-		System.out.println("score diagonale : " + j2.scoreDiagNOToSE(3));
+		System.out.println("score diagonale : " + j2.fullScoreCol(3));
 
 		//p.printPlanche();
 	}

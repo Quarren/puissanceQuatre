@@ -15,10 +15,10 @@ public abstract class JoueurAuto extends Joueur {
 		Planche p2 = new Planche(this.planche);
 		//System.out.println("planche p2 copie de plance avant ajout");
 		//p2.printPlanche();
-		if (p2.dernierPieceLigne(col) == 0) {
+		/*if (p2.dernierPieceLigne(col) == 0) {
 			System.out.println("colonne " + col + " pleine.");
 			return -1;
-		}
+		}*/
 		p2.ajouterPiece(col, this.getCouleur());
 		//System.out.println("planche p2 après ajout");
 		//p2.printPlanche();
@@ -34,10 +34,11 @@ public abstract class JoueurAuto extends Joueur {
 				break;
 			}
 		}
-		int score = col == 3 ? this.prioMilieu : 0;
+		int score = 0;
 		if (streak != 0) {
 			score += heuristics[streak-1];
 		}
+		System.out.println("scoreVertical (col n°" + col + "): " + score);
 		return score;
 	}
 	
@@ -45,10 +46,10 @@ public abstract class JoueurAuto extends Joueur {
 	public int scoreHorizontal(int col) {
 		System.out.println("appel méthode scoreHorizontal");
 		Planche p2 = new Planche(this.planche);
-		if (p2.dernierPieceLigne(col) == 0) {
+		/*if (p2.dernierPieceLigne(col) == 0) {
 			System.out.println("colonne " + col + " pleine.");
 			return -1;
-		}
+		}*/
 		p2.ajouterPiece(col, this.getCouleur());
 		int idx = p2.dernierPieceLigne(col);
 		p2.printPlanche();
@@ -56,7 +57,7 @@ public abstract class JoueurAuto extends Joueur {
 		//System.out.println("coldepart: " + colDepart);
 		int colFin = col >= 3 ? 6 : col + 3;
 		//System.out.println("colfin : " + colFin);
-		int score = col == 3 ? this.prioMilieu : 0;
+		int score = 0;
 		while (colDepart + 3 <= colFin) {
 			int streak = 0;
 			for (int i = 0; i < 4; i++) {
@@ -76,6 +77,7 @@ public abstract class JoueurAuto extends Joueur {
 			}
 			colDepart++;
 		}
+		System.out.println("scoreHorizontal (col n°" + col + "): " + score);
 		return score;
 	}
 	
@@ -83,10 +85,10 @@ public abstract class JoueurAuto extends Joueur {
 		System.out.println("appel méthode scoreDiagSOToNE");
 		Planche p2 = new Planche(this.planche);
 		// colonne pleine
-		if (p2.dernierPieceLigne(col) == 0) {
+		/*if (p2.dernierPieceLigne(col) == 0) {
 			System.out.println("colonne " + col + "pleine.");
 			return -1;
-		}
+		}*/
 		p2.ajouterPiece(col, this.getCouleur());
 		int idx = p2.dernierPieceLigne(col);
 		System.out.println("idx = " + idx);
@@ -137,7 +139,7 @@ public abstract class JoueurAuto extends Joueur {
 		System.out.println("colDepart = " + colDepart);
 		System.out.println("lineDepart = " + lineDepart);
 
-		int score = col == 3 ? this.prioMilieu : 0;
+		int score = 0;
 		
 		int streak;
 		// TODO vérifier si c'est bien <= ou < strict pour (colDepart + 3 <= 7 && lineDepart - 3 >= 0)
@@ -158,6 +160,7 @@ public abstract class JoueurAuto extends Joueur {
 			}
 			colDepart++; lineDepart--;
 		}
+		System.out.println("scoreDiagSOToNE (col n°" + col + "): " + score);
 		return score;
 	}
 	
@@ -167,10 +170,10 @@ public abstract class JoueurAuto extends Joueur {
 		System.out.println("appel méthode scoreDiagSOToNE");
 		Planche p2 = new Planche(this.planche);
 		// colonne pleine
-		if (p2.dernierPieceLigne(col) == 0) {
+		/*if (p2.dernierPieceLigne(col) == 0) {
 			System.out.println("colonne " + col + "pleine.");
 			return -1;
-		}
+		}*/
 		p2.ajouterPiece(col, this.getCouleur());
 		int idx = p2.dernierPieceLigne(col);
 		System.out.println("idx = " + idx);
@@ -221,7 +224,7 @@ public abstract class JoueurAuto extends Joueur {
 		System.out.println("colDepart = " + colDepart);
 		System.out.println("lineDepart = " + lineDepart);
 
-		int score = col == 3 ? this.prioMilieu : 0;
+		int score = 0;
 		
 		int streak;
 		while (colDepart + 3 < 7 && lineDepart + 3 < 6 && colDepart <= col && lineDepart <= idx) {
@@ -241,6 +244,23 @@ public abstract class JoueurAuto extends Joueur {
 			}
 			colDepart++; lineDepart++;
 		}
+		System.out.println("scoreDiagNOToSE (col n°" + col + "): " + score);
 		return score;
+	}
+	
+	public int fullScoreCol(int col) {
+		if (this.planche.dernierPieceLigne(col) == 0) {
+			System.out.println("colonne " + col + "pleine.");
+			return -1;
+		} else {
+			int score = col == 3 ? this.prioMilieu : 0;
+			score += this.scoreVertical(col) + this.scoreVertical(col) + this.scoreDiagNOToSE(col) + this.scoreDiagSOToNE(col);
+			return score;
+		}
+	}
+	
+	// TODO 
+	public int makeMove() {
+		return 0;
 	}
 }
