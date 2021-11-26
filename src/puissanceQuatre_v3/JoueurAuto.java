@@ -251,7 +251,7 @@ public abstract class JoueurAuto extends Joueur {
 	public int fullScoreCol(int col) {
 		if (this.planche.dernierPieceLigne(col) == 0) {
 			System.out.println("colonne " + col + "pleine.");
-			return -1;
+			return -100;
 		} else {
 			int score = col == 3 ? this.prioMilieu : 0;
 			score += this.scoreVertical(col) + this.scoreVertical(col) + this.scoreDiagNOToSE(col) + this.scoreDiagSOToNE(col);
@@ -259,8 +259,21 @@ public abstract class JoueurAuto extends Joueur {
 		}
 	}
 	
-	// TODO 
 	public int makeMove() {
-		return 0;
+		int max = 0;
+		int idxCol = -1;
+		int itScore;
+		for (int i = 0; i < 7; i++) {
+			itScore = this.fullScoreCol(i) ;
+			if (itScore > max) {
+				idxCol = i;
+				max = itScore;
+			}
+		}
+		if (idxCol < 0) {
+			throw new ActionJoueurImpossible("Toutes les colonnes sont pleines.");
+		} else {
+			return idxCol;
+		}
 	}
 }
