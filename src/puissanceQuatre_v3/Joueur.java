@@ -12,6 +12,7 @@ public abstract class Joueur {
 		planche = p;
 	}
 	
+	
 	/*
 	public Joueur(int id) {
 		this.id = id;

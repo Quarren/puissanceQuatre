@@ -1,16 +1,16 @@
 package puissanceQuatre_v3;
- 
+
 import java.util.Random;
 import java.util.Scanner;
 
 public class Jeu {
-	
+
 	private Planche planche;
 	private static Joueur joueur1;
 	private static Joueur joueur2;
-	
+
 	private boolean joueur1Tour;
-	
+
 	Scanner input;
 
 	// créer un jeu entre 2 joueurs humains
@@ -18,12 +18,12 @@ public class Jeu {
 		this.planche = new Planche();
 		this.joueur1 = new JoueurHumain(couleur1, planche);
 		this.joueur2 = new JoueurHumain(couleur2, planche);
-		
+
 		this.joueur1Tour = (new Random()).nextBoolean();
 		input = new Scanner(System.in);
-		
+
 	}
-	
+
 	// créer un jeu en choisissant un mix JoueurHumain / JoueurAuto
 	public Jeu(Joueur j1, Joueur j2, Planche p) {
 		this.planche = new Planche();
@@ -33,13 +33,22 @@ public class Jeu {
 		this.joueur1Tour = (new Random().nextBoolean());
 		input = new Scanner(System.in);
 	}
-	
+
+	public Joueur playing() {
+		if(joueur1Tour) {
+			System.out.print("Tour de joueur1");
+			return joueur1;
+		} else {
+			System.out.print("Tour de joueur2");
+			return joueur2;
+		}
+	}
 	public boolean checkForWinner(int col) {
-		
+
 		int ligne = this.planche.dernierPieceLigne(col);
 		int compt = 1;
 		String couleur = this.planche.puissance4Planche[ligne][col].getCouleur();
-		
+
 		// horizontal
 		for(int i = 1; i < 4; i++) {
 			if(ligne + i < 6) {
@@ -55,10 +64,10 @@ public class Jeu {
 				}
 			}	
 		}
-		
+
 		if(compt == 4)	return true;
 		else compt = 1;
-		
+
 		// vertical
 		for(int i = 1; i < 4; i++) {
 			if(col + i < 7) {
@@ -74,11 +83,11 @@ public class Jeu {
 				}
 			}	
 		}
-		
+
 		if(compt == 4)	return true;
 		else compt = 1;
-		
-		
+
+
 		// diagonale vers la droite
 		for(int i = 1; i < 4; i++) {
 			if(col + i < 7 && ligne + i < 6) {
@@ -94,10 +103,10 @@ public class Jeu {
 				}
 			}	
 		}
-		
+
 		if(compt == 4)	return true;
 		else compt = 1;
-		
+
 		// diagonale vers la gauche
 		for(int i = 1; i < 4; i++) {
 			if(col + i < 7 && ligne - i >= 0) {
@@ -113,79 +122,85 @@ public class Jeu {
 				}
 			}	
 		}
-		
+
 		if(compt == 4)	return true;
 		else compt = 1;
 
 		return false;
-		
+
 	}
-	
-	
-	
+
+
+
 	public void commencerJeu() {
-		
+
 		boolean jeuEnCours = true;
-		
+
 		while(jeuEnCours) {
 			
 			planche.printPlanche();
-			
+
 			String couleur;
 			if(joueur1Tour) {
 				couleur = joueur1.getCouleur();
-				System.out.println("Le tour de joueur 1");
+				System.out.println("Le tour de joueur 1 " + "(" + joueur1.getCouleur() + ")");
 			} else {
 				couleur = joueur2.getCouleur();
-				System.out.println("Le tour de joueur 2");
+				System.out.println("Le tour de joueur 2 " + "(" + joueur2.getCouleur() + ")");
 			}
-			
+
 			System.out.println("Choisissez la colonne où vous voulez ajouter votre pièce.");
 			System.out.print("Choisir entre 1 et " + planche.getColonnes() + ": ");
-			
-			Scanner input = new Scanner(System.in);
-			int colonne = input.nextInt() - 1;
-			
-			int succes = planche.ajouterPiece(colonne, couleur);		
-			while(succes == -1) {
-				System.out.println("La colonne est pleine");
-				System.out.print("Choisir entre 1 et " + planche.getColonnes() + ": ");
-				colonne = input.nextInt() - 1;
+
+			if(this.playing() instanceof JoueurAuto) {
+				((JoueurAuto)this.playing()).makeMove();
+				joueur1Tour = !joueur1Tour;
+
+			} else {
+				Scanner input = new Scanner(System.in);
+				int colonne = input.nextInt() - 1;
+				int succes = planche.ajouterPiece(colonne, couleur);		
 				
-				succes = planche.ajouterPiece(colonne, couleur);
+				while(succes == -1) {
+					System.out.println("La colonne est pleine");
+					System.out.print("Choisir entre 1 et " + planche.getColonnes() + ": ");
+					colonne = input.nextInt() - 1;
+
+					succes = planche.ajouterPiece(colonne, couleur);
+
+					if(this.checkForWinner(colonne)) {
+						planche.printPlanche();
+						if(joueur1Tour) {
+							System.out.println("Joueur 1 a gagné!");
+						} else {
+							System.out.println("Joueur 2 a gagné!");
+						}
+						System.out.println("Vous voulez jouer encore une fois ? (Y/N): ");
+
+						if(input.next().toUpperCase().equals("Y")) {
+							this.reinitialiser();
+						} else {
+							jeuEnCours = false;
+						}
+					}
+				}
+				//input.close();
+				joueur1Tour = !joueur1Tour;
 			}
-			
-			if(this.checkForWinner(colonne)) {
-				planche.printPlanche();
-				if(joueur1Tour)
-					System.out.println("Joueur 1 a gagné!");
-				else
-					System.out.println("Joueur 2 a gagné!");
-				
-				System.out.println("Vous voulez jouer encore une fois ? (Y/N): ");
-				
-				if(input.next().toUpperCase().equals("Y"))
-					this.reinitialiser();
-				else
-					jeuEnCours = false;
-			}
-			
-			joueur1Tour = !joueur1Tour;
 		}
-		input.close();
 	}
 
 	private void reinitialiser() {
 		this.planche = new Planche();
 		this.joueur1Tour = (new Random()).nextBoolean();
 	}
-	
-	
+
+
 	/* Calculer le nombre de lignes de 2, 3 et 4 pièces dans tous les alignements possibles
 	 * Puis multiplier par le score assigné à chacun dans l'attribut heuristics de JoueurAuto
 	 * Le JoueurAuto jouera dans la colonne avec le score le plus élevé
 	 * Warning : pos et col sont des indices, <=> num de ligne/colonne -1
-	*/
+	 */
 	public int checkHorizontal(JoueurAuto j, int pos, int col) {
 		int colScore = 0;
 		int colStart;
@@ -220,7 +235,7 @@ public class Jeu {
 		}
 		return colScore;
 	}
-	
+
 	public int checkVertical(JoueurAuto j, int pos, int col) {
 		int s = 1;
 		for (int i = pos; i > 0; i--) {
@@ -232,12 +247,12 @@ public class Jeu {
 		}
 		return s * j.heuristics[s-1];
 	}
-	
+
 	// Sud-Ouest vers Nord-Est
 	public int checkDiagSOToNE(JoueurAuto j, int pos, int col) {
 		int s = 0;
 		int colStart, linStart;
-		
+
 		// trouver le point de départ de la diagonale
 		if (col <= 3 && pos+1 <= 3) {
 			if (pos+1 <= col) {
@@ -251,7 +266,7 @@ public class Jeu {
 			colStart = col-3;
 			linStart = (pos+1)-3;
 		}
-		
+
 		// on veut trouver le nombre d'itérations à effectuer
 		int colEnd = col;
 		int linEnd = pos+1;
@@ -259,7 +274,7 @@ public class Jeu {
 			colEnd++;
 			linEnd++;
 		}
-				
+
 		for(int i = 0; i < colEnd-colStart; i++) {
 			int nbp = 1;  // on compte le pion qu'on voudrait poser
 			int idx = 0;
@@ -280,13 +295,13 @@ public class Jeu {
 		}	
 		return s;
 	}
-	
+
 	// Nord-Ouest vers Sud-Est
 	public int checkDiagNOToSE(JoueurAuto j, int pos, int col) {
 		//TODO
 		int s = 0;
 		int colStart, linStart;
-		
+
 		// trouver le point de départ de la diagonale
 		if (col <= 3 && pos+1 <= 3) {
 			if (pos+1 <= col) {
@@ -300,7 +315,7 @@ public class Jeu {
 			colStart = col-3;
 			linStart = (pos+1)-3;
 		}
-		
+
 		// on veut trouver le nombre d'itérations à effectuer
 		int colEnd = col;
 		int linEnd = pos+1;
@@ -308,7 +323,7 @@ public class Jeu {
 			colEnd++;
 			linEnd++;
 		}
-				
+
 		for(int i = 0; i < colEnd-colStart; i++) {
 			int nbp = 1;  // on compte le pion qu'on voudrait poser
 			int idx = 0;
@@ -329,11 +344,11 @@ public class Jeu {
 		}	
 		return s;
 	}
-	
+
 	//TODO donner les poids pour chaques lignes et la colonne centrale
-	
-	
-	
+
+
+
 }
 
 

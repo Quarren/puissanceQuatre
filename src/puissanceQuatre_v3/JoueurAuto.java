@@ -1,6 +1,6 @@
 package puissanceQuatre_v3;
 
-public abstract class JoueurAuto extends Joueur {
+public class JoueurAuto extends Joueur {
 	
 	public int [] heuristics = {0, 2, 3, 1000};
 	public int prioMilieu = 5;
@@ -38,13 +38,13 @@ public abstract class JoueurAuto extends Joueur {
 		if (streak != 0) {
 			score += heuristics[streak-1];
 		}
-		System.out.println("scoreVertical (col n°" + col + "): " + score);
+		//System.out.println("scoreVertical (col n°" + col + "): " + score);
 		return score;
 	}
 	
 	// calcule le score horizontal quand on rajoute une pièce dans la colonne col
 	public int scoreHorizontal(int col) {
-		System.out.println("appel méthode scoreHorizontal");
+		//System.out.println("appel méthode scoreHorizontal");
 		Planche p2 = new Planche(this.planche);
 		/*if (p2.dernierPieceLigne(col) == 0) {
 			System.out.println("colonne " + col + " pleine.");
@@ -52,7 +52,7 @@ public abstract class JoueurAuto extends Joueur {
 		}*/
 		p2.ajouterPiece(col, this.getCouleur());
 		int idx = p2.dernierPieceLigne(col);
-		p2.printPlanche();
+		// p2.printPlanche();
 		int colDepart = col >= 3 ? col - 3 : 0;
 		//System.out.println("coldepart: " + colDepart);
 		int colFin = col >= 3 ? 6 : col + 3;
@@ -77,12 +77,12 @@ public abstract class JoueurAuto extends Joueur {
 			}
 			colDepart++;
 		}
-		System.out.println("scoreHorizontal (col n°" + col + "): " + score);
+		//System.out.println("scoreHorizontal (col n°" + col + "): " + score);
 		return score;
 	}
 	
 	public int scoreDiagSOToNE(int col) {
-		System.out.println("appel méthode scoreDiagSOToNE");
+		//System.out.println("appel méthode scoreDiagSOToNE");
 		Planche p2 = new Planche(this.planche);
 		// colonne pleine
 		/*if (p2.dernierPieceLigne(col) == 0) {
@@ -91,8 +91,8 @@ public abstract class JoueurAuto extends Joueur {
 		}*/
 		p2.ajouterPiece(col, this.getCouleur());
 		int idx = p2.dernierPieceLigne(col);
-		System.out.println("idx = " + idx);
-		p2.printPlanche();
+		//System.out.println("idx = " + idx);
+		// p2.printPlanche();
 		
 		// éliminer les configurations où on a pas 4 cases alignées en diagonale
 		if (idx == 0 && col == 0
@@ -136,8 +136,8 @@ public abstract class JoueurAuto extends Joueur {
 			colDepart = col - 3; lineDepart = idx + 3;
 		}
 
-		System.out.println("colDepart = " + colDepart);
-		System.out.println("lineDepart = " + lineDepart);
+//		System.out.println("colDepart = " + colDepart);
+	//	System.out.println("lineDepart = " + lineDepart);
 
 		int score = 0;
 		
@@ -160,14 +160,14 @@ public abstract class JoueurAuto extends Joueur {
 			}
 			colDepart++; lineDepart--;
 		}
-		System.out.println("scoreDiagSOToNE (col n°" + col + "): " + score);
+		//System.out.println("scoreDiagSOToNE (col n°" + col + "): " + score);
 		return score;
 	}
 	
 	
 	//TODO scoreDiagNOToSE
 	public int scoreDiagNOToSE(int col) {
-		System.out.println("appel méthode scoreDiagSOToNE");
+		//System.out.println("appel méthode scoreDiagSOToNE");
 		Planche p2 = new Planche(this.planche);
 		// colonne pleine
 		/*if (p2.dernierPieceLigne(col) == 0) {
@@ -176,8 +176,8 @@ public abstract class JoueurAuto extends Joueur {
 		}*/
 		p2.ajouterPiece(col, this.getCouleur());
 		int idx = p2.dernierPieceLigne(col);
-		System.out.println("idx = " + idx);
-		p2.printPlanche();
+		//System.out.println("idx = " + idx);
+		// p2.printPlanche();
 		
 		// éliminer les configurations où on a pas 4 cases alignées en diagonale
 		if (idx == 0 && col == 4
@@ -221,8 +221,8 @@ public abstract class JoueurAuto extends Joueur {
 			colDepart = col - 3; lineDepart = idx - 3;
 		}
 
-		System.out.println("colDepart = " + colDepart);
-		System.out.println("lineDepart = " + lineDepart);
+		//System.out.println("colDepart = " + colDepart);
+	//	System.out.println("lineDepart = " + lineDepart);
 
 		int score = 0;
 		
@@ -244,7 +244,7 @@ public abstract class JoueurAuto extends Joueur {
 			}
 			colDepart++; lineDepart++;
 		}
-		System.out.println("scoreDiagNOToSE (col n°" + col + "): " + score);
+	//	System.out.println("scoreDiagNOToSE (col n°" + col + "): " + score);
 		return score;
 	}
 	
@@ -254,12 +254,13 @@ public abstract class JoueurAuto extends Joueur {
 			return -100;
 		} else {
 			int score = col == 3 ? this.prioMilieu : 0;
-			score += this.scoreVertical(col) + this.scoreVertical(col) + this.scoreDiagNOToSE(col) + this.scoreDiagSOToNE(col);
+			score += this.scoreVertical(col) + this.scoreHorizontal(col) + this.scoreDiagNOToSE(col) + this.scoreDiagSOToNE(col);
 			return score;
 		}
 	}
 	
 	public int makeMove() {
+		//System.out.print("Appel méthode MakeMove()");
 		int max = 0;
 		int idxCol = -1;
 		int itScore;
@@ -273,7 +274,11 @@ public abstract class JoueurAuto extends Joueur {
 		if (idxCol < 0) {
 			throw new ActionJoueurImpossible("Toutes les colonnes sont pleines.");
 		} else {
+			System.out.println("idxCol : " + idxCol);
+			this.planche.ajouterPiece(idxCol, this.getCouleur());
+		
 			return idxCol;
 		}
+		
 	}
 }
