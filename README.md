@@ -3,5 +3,7 @@
 https://www.youtube.com/watch?v=y7AKtWGOPAE&ab_channel=KeithGalli
 
 TODO : 
-- une méthode qui appelle les 4 autres sur une colonne
-- une méthode qui appelle la méthode précédente sur les 7 colonnes de la planche, les compare, et renvoie l'indice de la colonne dont le score est le plus élevé.
+- corriger bug Index out of bounds dans checkForWinner (lié à nos modifs de mardi ?)
+- trouver un moyen d'appeler les méthodes heuristiques sur les pions de l'adversaire pour que le joueurAuto puisse aussi bloquer
+- minimax
+- élagage
