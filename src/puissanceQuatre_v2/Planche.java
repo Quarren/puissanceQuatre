@@ -7,20 +7,28 @@ public class Planche {
 	private static final int colonnes = 7;
 	
 	
-	Piece [][] puissance4Planche = new Piece[lignes][colonnes];
+	public Piece [][] puissance4Planche = new Piece[lignes][colonnes];
 	
-	//Constructor
+	//Constructeur
 	public Planche() {
 		for(int ligne = 0; ligne < lignes; ligne++) {
 			for(int col = 0; col < colonnes; col++) puissance4Planche[ligne][col] = null;
 		}
 	}
 	
-	public int getColonnes() {
+	//Constructeur de copie
+	public Planche(Planche p) {
+		for(int ligne = 0; ligne < lignes; ligne++) {
+			for(int col = 0; col < colonnes; col++)
+				puissance4Planche[ligne][col] = p.puissance4Planche[ligne][col];
+		}
+	}
+	
+	public static int getColonnes() {
 		return colonnes;
 	}
 	
-	public int getLignes() {
+	public static int getLignes() {
 		return lignes;
 	}
 	
@@ -49,14 +57,30 @@ public class Planche {
 				}
 				return ligneAjoutee;
 			} else {
-				System.out.println("Cette colonne est pleine");
 				return -1;
 			}
 			
 		} else {
-			System.out.println("Vous avez coisis une colonne erronée");
+			System.out.println("Vous avez coisis une colonne erronÃ©e");
 			return -1;
 		}
+	}
+	
+	//planchePleine() renvoie true si la planche est pleine
+	public boolean planchePleine() {
+		if(this.remplissagePlanche() == lignes * colonnes) return true;
+		return false;
+	}
+	
+	
+	//remplissagePlanche() renvoie le nombre des cases remplis dans le jeu
+	public int remplissagePlanche() {
+		int compt = lignes * colonnes;
+		for (int ligne = 0; ligne < lignes; ligne++) {
+			for(int col = 0; col < colonnes; col++)
+				if(puissance4Planche[ligne][col] == null) compt--;
+		}
+		return compt;
 	}
 	
 	public void printPlanche() {

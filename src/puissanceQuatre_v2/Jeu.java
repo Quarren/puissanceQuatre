@@ -1,30 +1,37 @@
 package puissanceQuatre_v2;
  
+import puissanceQuatre_v2.IA.MinmaxJoueur;
+
 import java.util.Random;
 import java.util.Scanner;
 
 public class Jeu {
-	
+
 	private Planche planche;
+	private MinmaxJoueur minmaxJoueur;
 	private static Joueur joueur1;
 	private static Joueur joueur2;
-	
+
 	private boolean joueur1Tour;
-	
+	public boolean modeIA;
+
 	Scanner input;
+	
+	public Jeu(Planche planche) {
+		this.planche = planche;
+	}
 
 	public Jeu(String couleur1, String couleur2) {
 		this.planche = new Planche();
 		this.joueur1 = new Joueur(couleur1);
 		this.joueur2 = new Joueur(couleur2);
-		
 		this.joueur1Tour = (new Random()).nextBoolean();
+		this.modeIA = false;
 		input = new Scanner(System.in);
-		
 	}
-	
+
 	public boolean checkForWinner(int col) {
-		
+
 		int ligne = this.planche.dernierPieceLigne(col);
 		int compt = 1;
 		String couleur = this.planche.puissance4Planche[ligne][col].getCouleur();
@@ -33,14 +40,17 @@ public class Jeu {
 				if(this.planche.puissance4Planche[ligne + i][col] != null) {
 					if(this.planche.puissance4Planche[ligne+i][col].getCouleur() == couleur)
 						compt++;
-				}
+				} else break;
 			}
+		}
+		for(int i = 1; i < 4; i++) {
 			if(ligne - i >= 0) {
 				if(this.planche.puissance4Planche[ligne-i][col] != null) {
 					if(this.planche.puissance4Planche[ligne-i][col].getCouleur() == couleur)
 						compt++;
-				}
+				} else break;
 			}	
+			
 		}
 		
 		if(compt == 4)	return true;
@@ -51,16 +61,18 @@ public class Jeu {
 				if(this.planche.puissance4Planche[ligne][col + i] != null) {
 					if(this.planche.puissance4Planche[ligne][col + i].getCouleur() == couleur)
 						compt++;
-				}
+				} else break;
 			}
+		}
+		for(int i = 1; i < 4; i++) {
 			if(col - i >= 0) {
 				if(this.planche.puissance4Planche[ligne][col - i] != null) {
 					if(this.planche.puissance4Planche[ligne][col - i].getCouleur() == couleur)
 						compt++;
-				}
-			}	
+				} else break;
+			}
 		}
-		
+
 		if(compt == 4)	return true;
 		else compt = 1;
 		
@@ -69,16 +81,18 @@ public class Jeu {
 				if(this.planche.puissance4Planche[ligne + i][col + i] != null) {
 					if(this.planche.puissance4Planche[ligne + i][col + i].getCouleur() == couleur)
 						compt++;
-				}
+				} else break;
 			}
+		}
+		for(int i = 1; i < 4; i++) {
 			if(col - i >= 0 && ligne - i >= 0) {
 				if(this.planche.puissance4Planche[ligne - i][col - i] != null) {
 					if(this.planche.puissance4Planche[ligne - i][col - i].getCouleur() == couleur)
 						compt++;
-				}
+				} else break;
 			}	
 		}
-		
+
 		if(compt == 4)	return true;
 		else compt = 1;
 		
@@ -87,13 +101,15 @@ public class Jeu {
 				if(this.planche.puissance4Planche[ligne - i][col + i] != null) {
 					if(this.planche.puissance4Planche[ligne - i][col + i].getCouleur() == couleur)
 						compt++;
-				}
+				} else break;
 			}
+		}
+		for(int i = 1; i < 4; i++) {
 			if(col - i >= 0 && ligne + i < 6) {
 				if(this.planche.puissance4Planche[ligne + i][col - i] != null) {
 					if(this.planche.puissance4Planche[ligne + i][col - i].getCouleur() == couleur)
 						compt++;
-				}
+				} else break;
 			}	
 		}
 		
@@ -115,35 +131,58 @@ public class Jeu {
 			planche.printPlanche();
 			
 			String couleur;
-			if(joueur1Tour) {
-				couleur = joueur1.getCouleur();
-				System.out.println("Le tour de joueur 1");
+			if (!modeIA) {
+				if(joueur1Tour) {
+					couleur = joueur1.getCouleur();
+					System.out.println("Le tour de joueur 1");
+				} else {
+					couleur = joueur2.getCouleur();
+					System.out.println("Le tour de joueur 2");
+				}
 			} else {
-				couleur = joueur2.getCouleur();
-				System.out.println("Le tour de joueur 2");
+				if(joueur1Tour) {
+					couleur = joueur1.getCouleur();
+					System.out.println("Le tour de joueur 1");
+				} else {
+					couleur = joueur2.getCouleur();
+					System.out.println("Le tour de l'ordinateur");
+				}
+			}
+
+			int colonne;
+			if(modeIA && minmaxJoueur.minmaxJoueurTour) {
+				minmaxJoueur.setPlanche(planche);
+				colonne = minmaxJoueur.meilleurChoixCol();
+			} else {
+				System.out.println("Choisissez la colonne où vous voulez ajouter votre piièce.");
+				System.out.print("Choisir entre 1 and " + planche.getColonnes() + ": ");
+
+				Scanner input = new Scanner(System.in);
+				colonne = input.nextInt() - 1;
 			}
 			
-			System.out.println("Choisissez la colonne où vous voulez ajouter votre piièce.");
-			System.out.print("Choisir entre 1 and " + planche.getColonnes() + ": ");
-			
-			Scanner input = new Scanner(System.in);
-			int colonne = input.nextInt() - 1;
-			
-			int succes = planche.ajouterPiece(colonne, couleur);		
+			int succes = planche.ajouterPiece(colonne, couleur);
+
 			while(succes == -1) {
 				System.out.println("La colonne est pleine");
 				System.out.print("Choisir entre 1 and " + planche.getColonnes() + ": ");
 				colonne = input.nextInt() - 1;
-				
 				succes = planche.ajouterPiece(colonne, couleur);
 			}
 			
 			if(this.checkForWinner(colonne)) {
 				planche.printPlanche();
-				if(joueur1Tour)
-					System.out.println("Joueur 1 a gagné!");
-				else
-					System.out.println("Joueur 2 a gagné!");
+				if(modeIA) {
+					if(joueur1Tour)
+						System.out.println("Joueur 1 a gagné!");
+					else
+						System.out.println("L'Ordinateur a gagner");
+				} else {
+					if(joueur1Tour)
+						System.out.println("Joueur 1 a gagné!");
+					else
+						System.out.println("Joueur 2 a gagné!");
+				}
 				
 				System.out.println("Vous voulez jouer encore une fois ? (Y/N): ");
 				
@@ -153,6 +192,16 @@ public class Jeu {
 					jeuEnCours = false;
 			}
 			
+			if(planche.planchePleine()) {
+				
+				System.out.println("La planche est pleine, Voulez jouer encore une fois ? (Y/N): ");
+				
+				if(input.next().toUpperCase().equals("Y"))
+					this.reinitialiser();
+				else
+					jeuEnCours = false;
+			}
+			if(modeIA) minmaxJoueur.minmaxJoueurTour = joueur1Tour;
 			joueur1Tour = !joueur1Tour;
 		}
 		input.close();
@@ -161,6 +210,12 @@ public class Jeu {
 	private void reinitialiser() {
 		this.planche = new Planche();
 		this.joueur1Tour = (new Random()).nextBoolean();
+	}
+
+	public void activerIA() {
+		minmaxJoueur = new MinmaxJoueur(joueur2.getCouleur(), joueur1.getCouleur());
+		minmaxJoueur.minmaxJoueurTour = !joueur1Tour;
+		this.modeIA = true;
 	}
 }
 
