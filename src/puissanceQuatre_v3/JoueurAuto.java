@@ -176,17 +176,23 @@ public class JoueurAuto extends Joueur {
 		// trouver coordonnées départ de la diagonale
 		int colDepart;
 		int lineDepart;
-		if (col <= 3 || idx <= 3) { // la diagonale commence à une des extrémités de la planche
-			if (col <= idx) {
-				colDepart = 0;
-				lineDepart = idx - col;
-			} else {
-				colDepart = col - idx;
-				lineDepart = 0;
-			}
-		} else { // la diagonale ne commence pas à une extrémité de la planche
-			colDepart = col - 3; lineDepart = idx - 3;
+		if (col >= 3 && idx > 2) {
+			colDepart = col - 3;
+			lineDepart = idx - 3;
+			//System.out.println("boucle part1");
+
+		} else if (col <= idx) {
+			colDepart = 0;
+			lineDepart = idx - col;
+			//System.out.println("boucle part2");
+		} else {
+			colDepart = col - idx;
+			lineDepart = 0;
+			//System.out.println("boucle part3");
 		}
+		//System.out.println("On teste scoreDiagSOToNE avec col=" + col);
+		//System.out.println("col depart : " + colDepart);
+		//System.out.println("ligne départ : " + lineDepart);
 
 		int score = 0;
 		
@@ -221,7 +227,7 @@ public class JoueurAuto extends Joueur {
 			return -100;
 		} else {
 			int score = col == 3 ? this.prioMilieu : 0;
-			score += this.scoreVertical(col) + this.scoreHorizontal(col)/* + this.scoreDiagNOToSE(col)*/ + this.scoreDiagSOToNE(col);
+			score += this.scoreVertical(col) + this.scoreHorizontal(col) + this.scoreDiagNOToSE(col) + this.scoreDiagSOToNE(col);
 			return score;
 		}
 	}
