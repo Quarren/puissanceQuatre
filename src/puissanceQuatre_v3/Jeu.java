@@ -36,10 +36,10 @@ public class Jeu {
 
 	public Joueur playing() {
 		if(joueur1Tour) {
-			System.out.print("Tour de joueur1");
+			//System.out.print("Tour de joueur1");
 			return joueur1;
 		} else {
-			System.out.print("Tour de joueur2");
+			//System.out.print("Tour de joueur2");
 			return joueur2;
 		}
 	}
@@ -141,6 +141,7 @@ public class Jeu {
 			planche.printPlanche();
 
 			String couleur;
+			int checkThisCol;
 			if(joueur1Tour) {
 				couleur = joueur1.getCouleur();
 				System.out.println("Le tour de joueur 1 " + "(" + joueur1.getCouleur() + ")");
@@ -153,8 +154,25 @@ public class Jeu {
 			System.out.print("Choisir entre 1 et " + planche.getColonnes() + ": ");
 
 			if(this.playing() instanceof JoueurAuto) {
-				((JoueurAuto)this.playing()).makeMove();
+				checkThisCol = ((JoueurAuto)this.playing()).makeMove();
 				joueur1Tour = !joueur1Tour;
+				
+				if(this.checkForWinner(checkThisCol)) {
+					planche.printPlanche();
+					if(joueur1Tour) {
+						System.out.println("Joueur 1 a gagné!");
+					} else {
+						System.out.println("Joueur 2 a gagné!");
+					}
+					System.out.println("Vous voulez jouer encore une fois ? (Y/N): ");
+
+					if(input.next().toUpperCase().equals("Y")) {
+						this.reinitialiser();
+					} else {
+						jeuEnCours = false;
+					}
+				}
+				
 
 			} else {
 				Scanner input = new Scanner(System.in);
