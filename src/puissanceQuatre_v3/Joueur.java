@@ -5,11 +5,19 @@ public abstract class Joueur {
 	//private int id;
 	private Piece piece;
 	protected Planche planche;
+	private String oppCouleur;
 
 	public Joueur(String couleur, Planche p) {
 		piece = new Piece();
 		piece.setCouleur(couleur);
 		planche = p;
+	}
+	
+	public Joueur(String couleur, Planche p, String oppCouleur) {
+		piece = new Piece();
+		piece.setCouleur(couleur);
+		planche = p;
+		oppCouleur = oppCouleur;
 	}
 	
 	
@@ -25,6 +33,10 @@ public abstract class Joueur {
 	*/
 	public String getCouleur() {
 		return piece.getCouleur();
+	}
+	
+	public String getOppCouleur() {
+		return oppCouleur;
 	}
 
 }

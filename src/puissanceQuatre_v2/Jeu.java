@@ -3,6 +3,9 @@ package puissanceQuatre_v2;
 import java.util.Random;
 import java.util.Scanner;
 
+import puissanceQuatre_v3.JoueurAuto;
+import puissanceQuatre_v3.JoueurAutoFacile;
+
 public class Jeu {
 	
 	private Planche planche;

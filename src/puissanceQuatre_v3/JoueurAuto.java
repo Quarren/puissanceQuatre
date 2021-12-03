@@ -2,11 +2,15 @@ package puissanceQuatre_v3;
 
 public class JoueurAuto extends Joueur {
 	
-	public int [] heuristics = {0, 2, 3, 1000};
+	public int [] heuristics = {0, 3, 10, 1000};
 	public int prioMilieu = 5;
 	
 	public JoueurAuto(String couleur, Planche planche) {
 		super(couleur, planche);
+	}
+	
+	public JoueurAuto(String couleur, Planche p, String opp) {
+		super(couleur, p, opp);
 	}
 	
 	// OK
