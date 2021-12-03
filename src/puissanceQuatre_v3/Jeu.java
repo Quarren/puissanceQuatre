@@ -65,7 +65,7 @@ public class Jeu {
 			}	
 		}
 
-		if(compt == 4)	return true;
+		if(compt >= 4)	return true;
 		else compt = 1;
 
 		// vertical
@@ -84,7 +84,7 @@ public class Jeu {
 			}	
 		}
 
-		if(compt == 4)	return true;
+		if(compt >= 4)	return true;
 		else compt = 1;
 
 
@@ -104,7 +104,7 @@ public class Jeu {
 			}	
 		}
 
-		if(compt == 4)	return true;
+		if(compt >= 4)	return true;
 		else compt = 1;
 
 		// diagonale vers la gauche
@@ -123,7 +123,7 @@ public class Jeu {
 			}	
 		}
 
-		if(compt == 4)	return true;
+		if(compt >= 4)	return true;
 		else compt = 1;
 
 		return false;
