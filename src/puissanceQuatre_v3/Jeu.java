@@ -186,20 +186,20 @@ public class Jeu {
 
 					succes = planche.ajouterPiece(colonne, couleur);
 
-					if(this.checkForWinner(colonne)) {
-						planche.printPlanche();
-						if(joueur1Tour) {
-							System.out.println("Joueur 1 a gagné!");
-						} else {
-							System.out.println("Joueur 2 a gagné!");
-						}
-						System.out.println("Vous voulez jouer encore une fois ? (Y/N): ");
+				}
+				if(this.checkForWinner(colonne)) {
+					planche.printPlanche();
+					if(joueur1Tour) {
+						System.out.println("Joueur 1 a gagné!");
+					} else {
+						System.out.println("Joueur 2 a gagné!");
+					}
+					System.out.println("Vous voulez jouer encore une fois ? (Y/N): ");
 
-						if(input.next().toUpperCase().equals("Y")) {
-							this.reinitialiser();
-						} else {
-							jeuEnCours = false;
-						}
+					if(input.next().toUpperCase().equals("Y")) {
+						this.reinitialiser();
+					} else {
+						jeuEnCours = false;
 					}
 				}
 				//input.close();
