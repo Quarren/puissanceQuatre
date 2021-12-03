@@ -8,12 +8,13 @@ public class MinmaxJoueur extends IAJoueur {
 	
 	public boolean minmaxJoueurTour;
 	
+	
 	public MinmaxJoueur(String couleurIA, String couleurAdv) {
 		super(couleurIA, couleurAdv);
 	}
 
     public int meilleurChoixCol() {
-        return minmax(4, couleurIA);
+        return minmax(3, couleurIA);
     }
 	
 	private int minmax(int profondeur, String couleur) {
