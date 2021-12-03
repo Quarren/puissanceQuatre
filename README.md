@@ -7,3 +7,5 @@ TODO :
 - trouver un moyen d'appeler les méthodes heuristiques sur les pions de l'adversaire pour que le joueurAuto puisse aussi bloquer
 - minimax
 - élagage
+
+Lien du rapport (accès commentateur): https://drive.google.com/drive/folders/1jB2R6u3xe0m2AVZ5GRGDwbJCm-mwlyEv?usp=sharing
