@@ -302,7 +302,7 @@ public class Jeu {
 	}
 
 	private void reinitialiser() {
-		this.planche = new Planche();
+		this.planche.newPlanche();
 		this.joueur1Tour = (new Random()).nextBoolean();
 	}
 

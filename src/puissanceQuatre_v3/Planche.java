@@ -23,6 +23,17 @@ public class Planche {
 		}
 	}
 	
+	public Piece[][] newPlanche() {
+		Piece[][] newPlanche = new Piece[lignes][colonnes];
+		for(int ligne = 0; ligne < lignes; ligne++) {
+			for(int col = 0; col < colonnes; col++) newPlanche[ligne][col] = null;
+				for(int col = 0; col < colonnes; col++) puissance4Planche[ligne][col] = newPlanche[ligne][col];
+
+		}
+		
+		return puissance4Planche;
+	}
+	
 	public int getColonnes() {
 		return colonnes;
 	}
@@ -83,9 +94,11 @@ public class Planche {
 		System.out.println("<===========================>");
 	}
 	
-	public void copyPlanche(Planche p) {
+	public Piece[][] copyPlanche(Planche p) {
+		Piece[][] NewPlanche = new Piece[6][7];
 		for(int ligne = 0; ligne < lignes; ligne++) {
-			for(int col = 0; col < colonnes; col++) puissance4Planche[ligne][col] = p.puissance4Planche[ligne][col];
+			for(int col = 0; col < colonnes; col++) NewPlanche[ligne][col] = p.puissance4Planche[ligne][col];
 		}
+		return NewPlanche;
 	}
 }
