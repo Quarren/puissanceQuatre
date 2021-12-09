@@ -32,6 +32,7 @@ public class Planche {
 	}
 	
 	public int dernierPieceLigne(int col) {
+		// On récupère la première ligne non null sur la colonne désignée en paramètre
 		int ligne;
 		for(ligne = 0; ligne < lignes; ligne++) {
 			if(puissance4Planche[ligne][col] != null) break;
@@ -56,12 +57,12 @@ public class Planche {
 				}
 				return ligneAjoutee;
 			} else {
-				System.out.println("Cette colonne est pleine");
+				System.err.println("Cette colonne est pleine");
 				return -1;
 			}
 			
 		} else {
-			System.out.println("Vous avez choisi une colonne qui n'existe pas");
+			System.err.println("Vous avez choisi une colonne qui n'existe pas");
 			return -1;
 		}
 	}

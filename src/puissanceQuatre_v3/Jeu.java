@@ -36,50 +36,49 @@ public class Jeu {
 
 	public Joueur playing() {
 		if(joueur1Tour) {
-			//System.out.print("Tour de joueur1");
 			return joueur1;
 		} else {
-			//System.out.print("Tour de joueur2");
 			return joueur2;
 		}
 	}
-	public boolean checkForWinner(int col) {
-
+	/*public boolean checkForWinner(int col) {
+		// On détermine la première ligne disponible sur la colonne choisit en paramètre
 		int ligne = this.planche.dernierPieceLigne(col);
+		
+		// Compteur de pièces de même couleur alignées
 		int compt = 1;
 		String couleur = this.planche.puissance4Planche[ligne][col].getCouleur();
 
-		// horizontal
+		// Vertical : on regarde vers le bas
 		for(int i = 1; i < 4; i++) {
 			if(ligne + i < 6) {
 				if(this.planche.puissance4Planche[ligne + i][col] != null) {
-					if(this.planche.puissance4Planche[ligne+i][col].getCouleur() == couleur)
+					if(this.planche.puissance4Planche[ligne+i][col].getCouleur() == couleur) {
 						compt++;
-				}
+					} else compt = 1;
+				} 
 			}
-			if(ligne - i >= 0) {
-				if(this.planche.puissance4Planche[ligne-i][col] != null) {
-					if(this.planche.puissance4Planche[ligne-i][col].getCouleur() == couleur)
-						compt++;
-				}
-			}	
+			
+
+			if(compt >= 4)	return true;
+			else compt = 1;
+
 		}
-
-		if(compt >= 4)	return true;
-		else compt = 1;
-
-		// vertical
+		
+		// Horizontal
 		for(int i = 1; i < 4; i++) {
 			if(col + i < 7) {
 				if(this.planche.puissance4Planche[ligne][col + i] != null) {
-					if(this.planche.puissance4Planche[ligne][col + i].getCouleur() == couleur)
+					if(this.planche.puissance4Planche[ligne][col + i].getCouleur() == couleur) {
 						compt++;
+					} else compt = 1;
 				}
 			}
 			if(col - i >= 0) {
 				if(this.planche.puissance4Planche[ligne][col - i] != null) {
-					if(this.planche.puissance4Planche[ligne][col - i].getCouleur() == couleur)
+					if(this.planche.puissance4Planche[ligne][col - i].getCouleur() == couleur) {
 						compt++;
+					} else compt = 1;
 				}
 			}	
 		}
@@ -92,14 +91,16 @@ public class Jeu {
 		for(int i = 1; i < 4; i++) {
 			if(col + i < 7 && ligne + i < 6) {
 				if(this.planche.puissance4Planche[ligne + i][col + i] != null) {
-					if(this.planche.puissance4Planche[ligne + i][col + i].getCouleur() == couleur)
+					if(this.planche.puissance4Planche[ligne + i][col + i].getCouleur() == couleur) {
 						compt++;
+					} else compt = 1;
 				}
 			}
 			if(col - i >= 0 && ligne - i >= 0) {
 				if(this.planche.puissance4Planche[ligne - i][col - i] != null) {
-					if(this.planche.puissance4Planche[ligne - i][col - i].getCouleur() == couleur)
+					if(this.planche.puissance4Planche[ligne - i][col - i].getCouleur() == couleur) {
 						compt++;
+					} else compt = 1;
 				}
 			}	
 		}
@@ -111,19 +112,110 @@ public class Jeu {
 		for(int i = 1; i < 4; i++) {
 			if(col + i < 7 && ligne - i >= 0) {
 				if(this.planche.puissance4Planche[ligne - i][col + i] != null) {
-					if(this.planche.puissance4Planche[ligne - i][col + i].getCouleur() == couleur)
+					if(this.planche.puissance4Planche[ligne - i][col + i].getCouleur() == couleur) {
 						compt++;
+					} else compt = 1;
 				}
 			}
 			if(col - i >= 0 && ligne + i < 6) {
 				if(this.planche.puissance4Planche[ligne + i][col - i] != null) {
-					if(this.planche.puissance4Planche[ligne + i][col - i].getCouleur() == couleur)
+					if(this.planche.puissance4Planche[ligne + i][col - i].getCouleur() == couleur) {
 						compt++;
+					} else compt = 1;
 				}
 			}	
 		}
 
 		if(compt >= 4)	return true;
+		else compt = 1;
+
+		return false;
+
+	}*/
+	public boolean checkForWinner(int col) {
+
+		int ligne = this.planche.dernierPieceLigne(col);
+		int compt = 1;
+		String couleur = this.planche.puissance4Planche[ligne][col].getCouleur();
+		for(int i = 1; i < 4; i++) {
+			if(ligne + i < 6) {
+				if(this.planche.puissance4Planche[ligne + i][col] != null) {
+					if(this.planche.puissance4Planche[ligne+i][col].getCouleur() == couleur)
+						compt++;
+				} else break;
+			}
+		}
+		for(int i = 1; i < 4; i++) {
+			if(ligne - i >= 0) {
+				if(this.planche.puissance4Planche[ligne-i][col] != null) {
+					if(this.planche.puissance4Planche[ligne-i][col].getCouleur() == couleur)
+						compt++;
+				} else break;
+			}
+
+		}
+
+		if(compt >= 4) return true;
+		else compt = 1;
+
+		for(int i = 1; i < 4; i++) {
+			if(col + i < 7) {
+				if(this.planche.puissance4Planche[ligne][col + i] != null) {
+					if(this.planche.puissance4Planche[ligne][col + i].getCouleur() == couleur)
+						compt++;
+				} else break;
+			}
+		}
+		for(int i = 1; i < 4; i++) {
+			if(col - i >= 0) {
+				if(this.planche.puissance4Planche[ligne][col - i] != null) {
+					if(this.planche.puissance4Planche[ligne][col - i].getCouleur() == couleur)
+						compt++;
+				} else break;
+			}
+		}
+
+		if(compt >= 4) return true;
+		else compt = 1;
+
+		for(int i = 1; i < 4; i++) {
+			if(col + i < 7 && ligne + i < 6) {
+				if(this.planche.puissance4Planche[ligne + i][col + i] != null) {
+					if(this.planche.puissance4Planche[ligne + i][col + i].getCouleur() == couleur)
+						compt++;
+				} else break;
+			}
+		}
+		for(int i = 1; i < 4; i++) {
+			if(col - i >= 0 && ligne - i >= 0) {
+				if(this.planche.puissance4Planche[ligne - i][col - i] != null) {
+					if(this.planche.puissance4Planche[ligne - i][col - i].getCouleur() == couleur)
+						compt++;
+				} else break;
+			}
+		}
+
+		if(compt >= 4) return true;
+		else compt = 1;
+
+		for(int i = 1; i < 4; i++) {
+			if(col + i < 7 && ligne - i >= 0) {
+				if(this.planche.puissance4Planche[ligne - i][col + i] != null) {
+					if(this.planche.puissance4Planche[ligne - i][col + i].getCouleur() == couleur)
+						compt++;
+				} else break;
+			}
+		}
+		for(int i = 1; i < 4; i++) {
+			if(col - i >= 0 && ligne + i < 6) {
+				if(this.planche.puissance4Planche[ligne + i][col - i] != null) {
+					if(this.planche.puissance4Planche[ligne + i][col - i].getCouleur() == couleur)
+						compt++;
+				} else break;
+			}
+		}
+
+		if(compt >= 4) return true;
 		else compt = 1;
 
 		return false;
@@ -142,6 +234,7 @@ public class Jeu {
 
 			String couleur;
 			int checkThisCol;
+			
 			if(joueur1Tour) {
 				couleur = joueur1.getCouleur();
 				System.out.println("Le tour de joueur 1 " + "(" + joueur1.getCouleur() + ")");
@@ -157,12 +250,12 @@ public class Jeu {
 				checkThisCol = ((JoueurAuto)this.playing()).makeMove();
 				joueur1Tour = !joueur1Tour;
 				
-				if(this.checkForWinner(checkThisCol)) {
+				if(checkForWinner(checkThisCol)) {
 					planche.printPlanche();
 					if(joueur1Tour) {
-						System.out.println("Joueur 1 a gagné!");
+						System.out.println("Joueur 1 a gagné !");
 					} else {
-						System.out.println("Joueur 2 a gagné!");
+						System.out.println("Joueur 2 a gagné !");
 					}
 					System.out.println("Vous voulez jouer encore une fois ? (Y/N): ");
 
@@ -187,12 +280,12 @@ public class Jeu {
 					succes = planche.ajouterPiece(colonne, couleur);
 
 				}
-				if(this.checkForWinner(colonne)) {
+				if(checkForWinner(colonne)) {
 					planche.printPlanche();
 					if(joueur1Tour) {
-						System.out.println("Joueur 1 a gagné!");
+						System.out.println("Joueur 1 a gagné !");
 					} else {
-						System.out.println("Joueur 2 a gagné!");
+						System.out.println("Joueur 2 a gagné !");
 					}
 					System.out.println("Vous voulez jouer encore une fois ? (Y/N): ");
 

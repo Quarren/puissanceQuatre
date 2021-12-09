@@ -2,7 +2,8 @@ package puissanceQuatre_v3;
 
 public class JoueurAuto extends Joueur {
 	
-	public int [] heuristics = {0, 3, 10, 1000};
+	public int [] heuristics = {0, 3, 20, 1000};
+	
 	public int prioMilieu = 5;
 	
 	public JoueurAuto(String couleur, Planche planche) {
@@ -18,6 +19,7 @@ public class JoueurAuto extends Joueur {
 		Planche p2 = new Planche(this.planche);
 		p2.ajouterPiece(col, this.getCouleur());
 
+		// on instancie une variable par le numéro de ligne où la pièce va se trouver en fonction de la colonne en paramètre
 		int idx = p2.dernierPieceLigne(col);
 		int streak = 0;
 		// TODO: vérifier qu'il reste bien la place pour gagner dans la colonne (inutile de faire une ligne de 3 si on ne peut pas

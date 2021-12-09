@@ -1,6 +1,7 @@
 package puissanceQuatre_v3;
 
 public class JoueurAutoDifficile extends JoueurAuto {
+	public int [] heuristicsOpp = {0, 6, 40, 500};
 	
 	public JoueurAutoDifficile(String couleur, Planche p) {
 		super(couleur, p);
@@ -14,6 +15,7 @@ public class JoueurAutoDifficile extends JoueurAuto {
 		Planche p2 = new Planche(this.planche);
 		p2.ajouterPiece(col, this.getOppCouleur());
 
+		// on instancie une variable par le numéro de ligne où la pièce va se trouver en fonction de la colonne en paramètre
 		int idx = p2.dernierPieceLigne(col);
 		int streak = 0;
 		// TODO: vérifier qu'il reste bien la place pour gagner dans la colonne (inutile de faire une ligne de 3 si on ne peut pas
@@ -27,7 +29,7 @@ public class JoueurAutoDifficile extends JoueurAuto {
 		}
 		int score = 0;
 		if (streak != 0) {
-			score += heuristics[streak-1];
+			score += heuristicsOpp[streak-1];
 		}
 		return score;
 	}
@@ -53,7 +55,7 @@ public class JoueurAutoDifficile extends JoueurAuto {
 				}
 			}
 			if (streak != 0) {
-				score += this.heuristics[streak-1];
+				score += this.heuristicsOpp[streak-1];
 			}
 			colDepart++;
 		}
@@ -132,7 +134,7 @@ public class JoueurAutoDifficile extends JoueurAuto {
 				}
 			}
 			if (streak != 0) {
-				score += this.heuristics[streak-1];
+				score += this.heuristicsOpp[streak-1];
 			}
 			colDepart++; lineDepart--;
 		}
@@ -211,7 +213,7 @@ public class JoueurAutoDifficile extends JoueurAuto {
 				}
 			}
 			if (streak != 0) {
-				score += this.heuristics[streak-1];
+				score += this.heuristicsOpp[streak-1];
 			}
 			colDepart++; lineDepart++;
 		}
@@ -223,7 +225,7 @@ public class JoueurAutoDifficile extends JoueurAuto {
 	
 	public int fullScoreOppCol(int col) {
 		if (this.planche.dernierPieceLigne(col) == 0) {
-			System.out.println("colonne " + col + "pleine.");
+			//System.out.println("colonne " + col + "pleine.");
 			return 0;
 		} else {
 			return this.scoreOppVertical(col) + this.scoreOppHorizontal(col) + this.scoreOppDiagNOToSE(col) + this.scoreOppDiagSOToNE(col);
@@ -236,8 +238,9 @@ public class JoueurAutoDifficile extends JoueurAuto {
 		int idxCol = -1;
 		int itScore;
 		for (int i = 0; i < 7; i++) {
-			System.out.println("calcul move auto col n°:" + i);
-			itScore = this.fullScoreCol(i) + this.fullScoreCol(i);
+	//		System.out.println("calcul move auto col n°:" + i);
+			
+			itScore = this.fullScoreOppCol(i)+ this.fullScoreCol(i);
 			if (itScore > max) {
 				idxCol = i;
 				max = itScore;

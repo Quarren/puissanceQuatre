@@ -17,7 +17,7 @@ public abstract class Joueur {
 		piece = new Piece();
 		piece.setCouleur(couleur);
 		planche = p;
-		oppCouleur = oppCouleur;
+		this.oppCouleur = oppCouleur;
 	}
 	
 	
