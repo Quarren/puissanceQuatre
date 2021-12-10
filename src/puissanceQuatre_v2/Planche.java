@@ -3,8 +3,8 @@ package puissanceQuatre_v2;
 
 public class Planche {
 	
-	private static final int lignes = 6;
-	private static final int colonnes = 7;
+	protected static final int lignes = 6;
+	protected static final int colonnes = 7;
 	
 	
 	public Piece [][] puissance4Planche = new Piece[lignes][colonnes];
@@ -49,7 +49,7 @@ public class Planche {
 					if(puissance4Planche[ligne][colAjoute] == null) {
 						puissance4Planche[ligne][colAjoute] = new Piece();
 						puissance4Planche[ligne][colAjoute].setCouleur(couleur);
-						//System.err.println(puissance4Planche[ligne][colAjoute].getCouleur());
+						//System.err.println(colAjoute);
 						pieceAjoutee = true;
 						ligneAjoutee = ligne;
 						break;
@@ -61,7 +61,7 @@ public class Planche {
 			}
 			
 		} else {
-			System.out.println("Vous avez coisis une colonne erronÃ©e");
+			System.out.println("Vous avez coisis une colonne erronée");
 			return -1;
 		}
 	}
@@ -71,6 +71,8 @@ public class Planche {
 		if(this.remplissagePlanche() == lignes * colonnes) return true;
 		return false;
 	}
+	
+	
 	
 	
 	//remplissagePlanche() renvoie le nombre des cases remplis dans le jeu

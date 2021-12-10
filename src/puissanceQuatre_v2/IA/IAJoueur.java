@@ -1,20 +1,21 @@
 package puissanceQuatre_v2.IA;
 
-import puissanceQuatre_v2.Planche;
 
 public class IAJoueur {
 	
-	Planche planche;
+	PlancheArtificielle planche;
 	
-	protected String couleurIA;
-	protected String couleurAdv;
+	protected static String couleurIA;
+	protected static String couleurAdv;
 	
-	public IAJoueur(String couleurIA, String couleurAdv) {
-		this.couleurIA = couleurIA;
-		this.couleurAdv = couleurAdv;
+	public IAJoueur() {
+		super();
 	}
 
-	public void setPlanche(Planche planche) {
-		this.planche = new Planche(planche);
+	public IAJoueur(String couleurIA, String couleurAdv) {
+		IAJoueur.couleurIA = couleurIA;
+		IAJoueur.couleurAdv = couleurAdv;
 	}
+
+	
 }

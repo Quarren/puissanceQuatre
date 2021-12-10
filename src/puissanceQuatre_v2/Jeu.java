@@ -1,6 +1,8 @@
 package puissanceQuatre_v2;
  
+import puissanceQuatre_v2.IA.AlphaBetaJoueur;
 import puissanceQuatre_v2.IA.MinmaxJoueur;
+import puissanceQuatre_v2.IA.PlancheArtificielle;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -9,11 +11,13 @@ public class Jeu {
 
 	private Planche planche;
 	private MinmaxJoueur minmaxJoueur;
+	private AlphaBetaJoueur alphaBetaJoueur;
 	private static Joueur joueur1;
 	private static Joueur joueur2;
 
 	private boolean joueur1Tour;
-	public boolean modeIA;
+	private boolean modeMinMax;
+	private boolean modeAlphaBeta;
 
 	Scanner input;
 	
@@ -26,7 +30,7 @@ public class Jeu {
 		this.joueur1 = new Joueur(couleur1);
 		this.joueur2 = new Joueur(couleur2);
 		this.joueur1Tour = (new Random()).nextBoolean();
-		this.modeIA = false;
+		this.modeMinMax = false;
 		input = new Scanner(System.in);
 	}
 
@@ -40,6 +44,7 @@ public class Jeu {
 				if(this.planche.puissance4Planche[ligne + i][col] != null) {
 					if(this.planche.puissance4Planche[ligne+i][col].getCouleur() == couleur)
 						compt++;
+					else break;
 				} else break;
 			}
 		}
@@ -48,12 +53,13 @@ public class Jeu {
 				if(this.planche.puissance4Planche[ligne-i][col] != null) {
 					if(this.planche.puissance4Planche[ligne-i][col].getCouleur() == couleur)
 						compt++;
+					else break;
 				} else break;
 			}	
 			
 		}
 		
-		if(compt == 4)	return true;
+		if(compt >= 4)	return true;
 		else compt = 1;
 		
 		for(int i = 1; i < 4; i++) {
@@ -61,6 +67,7 @@ public class Jeu {
 				if(this.planche.puissance4Planche[ligne][col + i] != null) {
 					if(this.planche.puissance4Planche[ligne][col + i].getCouleur() == couleur)
 						compt++;
+					else break;
 				} else break;
 			}
 		}
@@ -69,11 +76,12 @@ public class Jeu {
 				if(this.planche.puissance4Planche[ligne][col - i] != null) {
 					if(this.planche.puissance4Planche[ligne][col - i].getCouleur() == couleur)
 						compt++;
+					else break;
 				} else break;
 			}
 		}
 
-		if(compt == 4)	return true;
+		if(compt >= 4)	return true;
 		else compt = 1;
 		
 		for(int i = 1; i < 4; i++) {
@@ -81,6 +89,7 @@ public class Jeu {
 				if(this.planche.puissance4Planche[ligne + i][col + i] != null) {
 					if(this.planche.puissance4Planche[ligne + i][col + i].getCouleur() == couleur)
 						compt++;
+					else break;
 				} else break;
 			}
 		}
@@ -89,11 +98,12 @@ public class Jeu {
 				if(this.planche.puissance4Planche[ligne - i][col - i] != null) {
 					if(this.planche.puissance4Planche[ligne - i][col - i].getCouleur() == couleur)
 						compt++;
+					else break;
 				} else break;
 			}	
 		}
 
-		if(compt == 4)	return true;
+		if(compt >= 4)	return true;
 		else compt = 1;
 		
 		for(int i = 1; i < 4; i++) {
@@ -109,11 +119,12 @@ public class Jeu {
 				if(this.planche.puissance4Planche[ligne + i][col - i] != null) {
 					if(this.planche.puissance4Planche[ligne + i][col - i].getCouleur() == couleur)
 						compt++;
+					else break;
 				} else break;
 			}	
 		}
 		
-		if(compt == 4)	return true;
+		if(compt >= 4)	return true;
 		else compt = 1;
 
 		return false;
@@ -131,7 +142,7 @@ public class Jeu {
 			planche.printPlanche();
 			
 			String couleur;
-			if (!modeIA) {
+			if (!modeMinMax || !modeAlphaBeta) {
 				if(joueur1Tour) {
 					couleur = joueur1.getCouleur();
 					System.out.println("Le tour de joueur 1");
@@ -140,6 +151,7 @@ public class Jeu {
 					System.out.println("Le tour de joueur 2");
 				}
 			} else {
+				
 				if(joueur1Tour) {
 					couleur = joueur1.getCouleur();
 					System.out.println("Le tour de joueur 1");
@@ -150,13 +162,21 @@ public class Jeu {
 			}
 
 			int colonne;
-			if(modeIA && minmaxJoueur.minmaxJoueurTour) {
+			if(modeMinMax && !joueur1Tour) {
 				minmaxJoueur.setPlanche(planche);
+				long startTime = System.currentTimeMillis();
 				colonne = minmaxJoueur.meilleurChoixCol();
+				long elapsedTime = System.currentTimeMillis() - startTime;
+			    System.out.println("temps de réponse : " + elapsedTime);
+			} else if(modeAlphaBeta && !joueur1Tour) {
+				alphaBetaJoueur.setPlanche(planche);
+				long startTime = System.currentTimeMillis();
+				colonne = alphaBetaJoueur.meilleurChoixCol();
+				long elapsedTime = System.currentTimeMillis() - startTime;
+			    System.out.println("temps de réponse : " + elapsedTime);
 			} else {
-				System.out.println("Choisissez la colonne où vous voulez ajouter votre piièce.");
-				System.out.print("Choisir entre 1 and " + planche.getColonnes() + ": ");
-
+				System.out.println("Choisissez la colonne où vous voulez ajouter votre pièce.");
+				System.out.print("Choisir entre 1 and " + Planche.getColonnes() + ": ");
 				Scanner input = new Scanner(System.in);
 				colonne = input.nextInt() - 1;
 			}
@@ -165,14 +185,17 @@ public class Jeu {
 
 			while(succes == -1) {
 				System.out.println("La colonne est pleine");
-				System.out.print("Choisir entre 1 and " + planche.getColonnes() + ": ");
-				colonne = input.nextInt() - 1;
+				if(modeMinMax && !joueur1Tour) colonne = minmaxJoueur.meilleurChoixCol();
+				else {
+					System.out.print("Choisir entre 1 and " + planche.getColonnes() + ": ");
+					colonne = input.nextInt() - 1;
+				}
 				succes = planche.ajouterPiece(colonne, couleur);
 			}
 			
 			if(this.checkForWinner(colonne)) {
 				planche.printPlanche();
-				if(modeIA) {
+				if(modeMinMax || modeAlphaBeta) {
 					if(joueur1Tour)
 						System.out.println("Joueur 1 a gagné!");
 					else
@@ -201,7 +224,7 @@ public class Jeu {
 				else
 					jeuEnCours = false;
 			}
-			if(modeIA) minmaxJoueur.minmaxJoueurTour = joueur1Tour;
+			//if(modeIA) minmaxJoueur.minmaxJoueurTour = joueur1Tour;
 			joueur1Tour = !joueur1Tour;
 		}
 		input.close();
@@ -211,11 +234,17 @@ public class Jeu {
 		this.planche = new Planche();
 		this.joueur1Tour = (new Random()).nextBoolean();
 	}
-
-	public void activerIA() {
+	
+	public void activerAlphaBeta() {
+		alphaBetaJoueur = new AlphaBetaJoueur(joueur2.getCouleur(), joueur1.getCouleur());
+		alphaBetaJoueur.minmaxJoueurTour = !joueur1Tour;
+		this.modeAlphaBeta = true;
+	}
+	
+	public void activerMinMax() {
 		minmaxJoueur = new MinmaxJoueur(joueur2.getCouleur(), joueur1.getCouleur());
 		minmaxJoueur.minmaxJoueurTour = !joueur1Tour;
-		this.modeIA = true;
+		this.modeMinMax = true;
 	}
 }
 
