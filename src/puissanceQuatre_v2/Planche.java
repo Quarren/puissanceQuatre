@@ -7,7 +7,7 @@ public class Planche {
 	private static final int colonnes = 7;
 	
 	
-	Piece [][] puissance4Planche = new Piece[lignes][colonnes];
+	public Piece [][] puissance4Planche = new Piece[lignes][colonnes];
 	
 	//Constructor
 	public Planche() {
