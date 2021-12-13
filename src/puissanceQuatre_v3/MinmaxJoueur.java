@@ -33,9 +33,11 @@ public class MinmaxJoueur extends IAJoueur {
 	//setPlanche(Planche plance) recopie la planche p dans this.planche
 	public void setPlanche(Planche planche) {
 		for(int ligne = 0; ligne < Planche.getLignes(); ligne++) {
-			for(int col = 0; col < Planche.getColonnes(); col++)
-				if(planche.puissance4Planche[ligne][col] != null)
+			for(int col = 0; col < Planche.getColonnes(); col++) {
+				if (planche.puissance4Planche[ligne][col] != null) {
 					this.planche.puissance4Planche[ligne][col] = planche.puissance4Planche[ligne][col];
+				}
+			}
 		}
 	}
 	

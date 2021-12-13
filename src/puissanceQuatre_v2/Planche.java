@@ -16,11 +16,11 @@ public class Planche {
 		}
 	}
 	
-	public int getColonnes() {
+	public static int getColonnes() {
 		return colonnes;
 	}
 	
-	public int getLignes() {
+	public static int getLignes() {
 		return lignes;
 	}
 	
