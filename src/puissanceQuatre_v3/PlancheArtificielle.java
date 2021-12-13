@@ -18,8 +18,8 @@ public class PlancheArtificielle extends Planche{
 	}
 
 	public PlancheArtificielle(PlancheArtificielle p) {
-		for(int ligne = 0; ligne < lignes; ligne++) {
-			for(int col = 0; col < colonnes; col++)
+		for(int ligne = 0; ligne < this.getLignes(); ligne++) {
+			for(int col = 0; col < this.getColonnes(); col++)
 				
 					this.puissance4Planche[ligne][col] = p.puissance4Planche[ligne][col];
 		}
@@ -30,8 +30,8 @@ public class PlancheArtificielle extends Planche{
 	//copier la planche artificille p dans this
 	public void dupliquer(PlancheArtificielle p) {
 		reinitialserPlanche();
-		for(int ligne = 0; ligne < lignes; ligne++) {
-			for(int col = 0; col < colonnes; col++)
+		for(int ligne = 0; ligne < this.getLignes(); ligne++) {
+			for(int col = 0; col < this.getColonnes(); col++)
 				if(p.puissance4Planche[ligne][col] != null)
 					this.puissance4Planche[ligne][col] = p.puissance4Planche[ligne][col];
 		}
@@ -223,8 +223,8 @@ public class PlancheArtificielle extends Planche{
     /********************************************************************************************************************/
     //réinitialser this.planche avec des null dans la grille
 	private void reinitialserPlanche() {
-		for(int ligne = 0; ligne < lignes; ligne++) {
-			for(int col = 0; col < colonnes; col++)
+		for(int ligne = 0; ligne < this.getLignes(); ligne++) {
+			for(int col = 0; col < this.getColonnes(); col++)
 					this.puissance4Planche[ligne][col] = null;
 		}
 	}
