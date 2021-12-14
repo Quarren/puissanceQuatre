@@ -1,0 +1,35 @@
+TEST METHODE GAGNER_VERTICALEMENT (CLASSE COLONNE)
+
+		Jeu j = new Jeu();
+				
+		j.ajouterPion(1, j.joueurs[0].getId());
+		j.ajouterPion(1, j.joueurs[0].getId());
+		j.ajouterPion(1, j.joueurs[0].getId());
+		j.ajouterPion(1, j.joueurs[0].getId());
+		j.ajouterPion(1, j.joueurs[0].getId());
+		j.ajouterPion(1, j.joueurs[0].getId());
+		
+		System.out.println("devrait renvoyer true : ");
+		System.out.println(j.colonnes[0].gagnerVertical(j.joueurs[0], 0, 0));
+		System.out.println("devrait renvoyer false : ");
+		System.out.println(j.colonnes[0].gagnerVertical(j.joueurs[1], 0, 0));
+		System.out.println("devrait renvoyer false : ");
+		System.out.println(j.colonnes[1].gagnerVertical(j.joueurs[0], 0, 0));
+		System.out.println(j.toString());
+
+
+TEST METHODE GAGNER_HORIZONTALEMENT (CLASSE JEU)
+
+		Jeu j = new Jeu();
+		
+		for (int i = 1; i < 8; i++) {
+			j.ajouterPion(i, 1);
+		}
+		System.out.println("le joueur 1 a-t-il gagné horizontalement sur la ligne 0 ?");
+		System.out.println(j.gagnerHorizontal(0, j.joueurs[0], 0, 0));
+		System.out.println("le joueur 1 a-t-il gagné horizontalement sur la ligne 1 ?");
+		System.out.println(j.gagnerHorizontal(1, j.joueurs[0], 0, 0));
+		System.out.println("le joueur 2 a-t-il gagné horizontalement sur la ligne 0 ?");
+		System.out.println(j.gagnerHorizontal(0, j.joueurs[1], 0, 0));
+		
+		System.out.println(j.toString());
