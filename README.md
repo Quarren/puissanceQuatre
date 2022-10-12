@@ -1,10 +1,13 @@
 # puissanceQuatre
 
+Programme permettant de jouer une partie de puissance 4 contre une IA.
+Représentation du plateau simplifiée, dans la console.
+Réalisé en Java, l'IA utilise des heuristiques et/ou un MiniMax selon la difficulté du joueur sélectionné.
+
+Sources utilisées pour les heuristiques :
 https://www.youtube.com/watch?v=y7AKtWGOPAE&ab_channel=KeithGalli
 
-TODO : 
-- corriger bug Index out of bounds dans checkForWinner (lié à nos modifs de mardi ?) -> ne pas demander à l'utilisateur si il veut relancer le jeu ?
-- minimax
-- élagage
-
-Lien du rapport (accès commentateur): https://drive.google.com/drive/folders/1jB2R6u3xe0m2AVZ5GRGDwbJCm-mwlyEv?usp=sharing
+Auteurs:
+- Yassine El Amiri
+- Kevin Daniel
+- Thibault Pares
